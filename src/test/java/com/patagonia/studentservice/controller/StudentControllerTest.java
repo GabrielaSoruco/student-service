@@ -34,7 +34,6 @@ class StudentControllerTest {
     private StudentServiceImpl studentService;
 
     ObjectMapper objectMapper;
-
     Student student;
     List<Student> studentsList = new ArrayList<>();
 
