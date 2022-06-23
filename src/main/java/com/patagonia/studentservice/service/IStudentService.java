@@ -14,7 +14,7 @@ public interface IStudentService {
 
     void updateStudent(Long id, Student student);
 
-    void deleteStudent(Long id);
+    String deleteStudent(Long id);
 
     Integer ageAverage();
 

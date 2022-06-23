@@ -14,30 +14,24 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-
 @Service
 public class StudentServiceImpl implements IStudentService {
-
     @Autowired
     private StudentRepository repository;
-
     @Override
     public List<Student> findAll() {
         return repository.findAll();
     }
-
     @Override
     public Student findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(()-> new StudentNotFoundException(id));
     }
-
     @Transactional
     @Override
     public Student createStudent(Student student) {
         return repository.save(student);
     }
-
     @Transactional
     @Override
     public void updateStudent(Long id, Student student) {
@@ -47,14 +41,14 @@ public class StudentServiceImpl implements IStudentService {
         studentToUpdate.setBirthday(student.getBirthday());
         repository.save(studentToUpdate);
     }
-
     @Transactional
     @Override
-    public void deleteStudent(Long id) {
+    public String deleteStudent(Long id) {
         if (!repository.existsById(id)){
             throw new StudentNotFoundException(id);
         }
         repository.deleteById(id);
+        return "Student successfully deleted";
     }
 
     // calcular la edad promedio de los students
@@ -67,14 +61,12 @@ public class StudentServiceImpl implements IStudentService {
 
     // Mostrar el student con más edad y con menos edad.
     Comparator<Student> comparatorYear = Comparator.comparingInt(student -> Period.between(student.getBirthday(), LocalDate.now()).getYears());
-
     public Student olderStudent(){
         List<Student> students = repository.findAll();
         return students.stream()
                 .max(comparatorYear)
                 .orElseThrow(NoSuchElementException::new);
     }
-
     public Student youngerStudent(){
         List<Student> students = repository.findAll();
         return students.stream()

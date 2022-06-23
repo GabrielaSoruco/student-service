@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/students")
 public class StudentController {
@@ -38,22 +37,21 @@ public class StudentController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable Long id){
-        service.deleteStudent(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteStudent(@PathVariable Long id){
+        return ResponseEntity.ok(service.deleteStudent(id));
     }
 
-    @GetMapping("/age/average")
+    @GetMapping("/ageAverage")
     public ResponseEntity<Integer> getAgeAverage(){
         return ResponseEntity.ok(service.ageAverage());
     }
 
-    @GetMapping("/adults/older")
+    @GetMapping("/older")
     public ResponseEntity<Student> getOlderStudent(){
         return ResponseEntity.ok(service.olderStudent());
     }
 
-    @GetMapping("/minors/younger")
+    @GetMapping("/younger")
     public ResponseEntity<Student> getYoungerStudent(){
         return ResponseEntity.ok(service.youngerStudent());
     }
@@ -73,12 +71,12 @@ public class StudentController {
         return ResponseEntity.ok(service.getMinorsStudents());
     }
 
-    @GetMapping("/age/average/adults")
+    @GetMapping("/ageAverageAdults")
     public ResponseEntity<Integer> getAdultsAverage(){
         return ResponseEntity.ok(service.adultsAverage());
     }
 
-    @GetMapping("/age/average/minors")
+    @GetMapping("/ageAverageMinors")
     public ResponseEntity<Integer> getMinorsAverage(){
         return ResponseEntity.ok(service.minorsAverage());
     }
